@@ -17,9 +17,19 @@ export async function login(req, res) {
             res.status(401).json({ message: "Usuario no autorizado" });
         }
     } catch (error) {
-        res
-        .status(500)
-        .json({ message: "error interno del servidor", error: error.message });
+        console.error(error);
+        res.status(500).json({ message: "error interno del servidor" });
+    }
+}
+
+// El token ya fue validado por el middleware authentication
+export async function logout(req, res) {
+    try {
+        await authService.revokeToken(req.user.jti, req.user.exp);
+        res.sendStatus(204);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "error interno del servidor" });
     }
 }
 
@@ -36,8 +46,7 @@ export async function register(req, res) {
         if (error.name === "ValidationError") {
             return res.status(400).json({ message: "Datos inválidos", error: error.message });
         }
-        res
-        .status(500)
-        .json({ message: "error interno del servidor", error: error.message });
+        console.error(error);
+        res.status(500).json({ message: "error interno del servidor" });
     }
 }

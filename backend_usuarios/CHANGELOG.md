@@ -12,6 +12,21 @@ Changes are grouped by date and categorized as:
 
 ---
 
+## 2026-10-28
+
+### Added
+
+* Added project README describing setup, authentication and every exposed endpoint.
+* Added logout: closing a session immediately invalidates its token in this API.
+
+### Security
+
+* Listing, viewing and deactivating other users is now restricted to administrators; any authenticated user can still view their own profile.
+* Internal server errors no longer expose error details to clients; they are logged on the server instead.
+* Tokens issued before this change are no longer accepted; users need to log in again.
+
+---
+
 ## 2026-10-27
 
 ### Added

@@ -1,4 +1,5 @@
 import { User } from '../models/user.model.js';
+import { RevokedToken } from '../models/revoked-token.model.js';
 import { verifyPassword } from '../utils/password.js';
 
 export const LOGIN_ERRORS = {
@@ -24,4 +25,18 @@ export const validateCredentials = async (email, password) => {
     if (!user.activo) return { error: LOGIN_ERRORS.ACCOUNT_DISABLED };
 
     return { user };
+}
+
+// Logout: guarda el id del token hasta que vence (exp viene en segundos).
+// Es idempotente: revocar dos veces el mismo token no falla.
+export const revokeToken = async (jti, exp) => {
+    await RevokedToken.updateOne(
+        { jti },
+        { $setOnInsert: { jti, expiresAt: new Date(exp * 1000) } },
+        { upsert: true }
+    );
+}
+
+export const isTokenRevoked = async (jti) => {
+    return await RevokedToken.exists({ jti }) !== null;
 }

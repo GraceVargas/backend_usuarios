@@ -5,14 +5,14 @@ import { internalApiKey } from '../middlewares/internal-api-key.js';
 
 const router = express.Router();
 
-router.get("/usuarios", authentication, userController.getAllUsers);
+router.get("/usuarios", authentication, authorize("administrador"), userController.getAllUsers);
 
 // Debe declararse antes de "/usuarios/:id" para que "me" no se interprete como un id
 router.get("/usuarios/me", authentication, userController.getMe);
 
-router.get("/usuarios/:id", authentication, userController.getUserById);
+router.get("/usuarios/:id", authentication, authorize("administrador"), userController.getUserById);
 
-router.delete("/usuarios/:id", authentication, userController.deleteUser);
+router.delete("/usuarios/:id", authentication, authorize("administrador"), userController.deleteUser);
 
 router.post("/admin/usuarios", authentication, authorize("administrador"), userController.createUserByAdmin);
 
