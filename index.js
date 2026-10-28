@@ -23,6 +23,11 @@ app.use((_req, res) => {
 })
 
 
-app.listen(port, () => {
-    console.log(`Server running on PORT: ${port}`);
-})
+// En Vercel la app corre como función serverless: se exporta en lugar de escuchar un puerto
+if (!process.env.VERCEL) {
+    app.listen(port, () => {
+        console.log(`Server running on PORT: ${port}`);
+    })
+}
+
+export default app;

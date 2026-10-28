@@ -25,6 +25,10 @@ Changes are grouped by date and categorized as:
 * Internal server errors no longer expose error details to clients; they are logged on the server instead.
 * Tokens issued before this change are no longer accepted; users need to log in again.
 
+### Fixed
+
+* Fixed deployment on Vercel, where every request returned a 500 error.
+
 ---
 
 ## 2026-10-27
