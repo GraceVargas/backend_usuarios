@@ -143,7 +143,7 @@ Solo para administradores. Devuelve todos los usuarios activos.
 
 | Respuesta | Cuándo |
 |---|---|
-| `200` `{ "message": "Lista de usuarios", "payload": [ ... ] }` | El token es de un administrador. |
+| `200` `[ ...usuarios ]` | El token es de un administrador. |
 | `403` `{ "message": "Acceso denegado" }` | El token no es de un administrador. |
 
 ### `GET /usuarios/me`: perfil propio
@@ -152,7 +152,7 @@ Disponible para cualquier usuario con sesión iniciada, sin importar el rol. Dev
 
 | Respuesta | Cuándo |
 |---|---|
-| `200` `{ "message": "Usuario encontrado", "payload": { ... } }` | El usuario existe y está activo. |
+| `200` `{ ...usuario }` | El usuario existe y está activo. |
 | `404` `{ "message": "Usuario no encontrado" }` | El usuario fue desactivado después de emitirse el token. |
 
 ### `GET /usuarios/:id`: ver un usuario
@@ -161,7 +161,7 @@ Solo para administradores.
 
 | Respuesta | Cuándo |
 |---|---|
-| `200` `{ "message": "Usuario encontrado", "payload": { ... } }` | El usuario existe y está activo. |
+| `200` `{ ...usuario }` | El usuario existe y está activo. |
 | `404` `{ "message": "Usuario no encontrado" }` | No existe, está inactivo o el id no tiene un formato válido. |
 | `403` `{ "message": "Acceso denegado" }` | El token no es de un administrador. |
 
@@ -171,7 +171,7 @@ Solo para administradores. Hace una **baja lógica**: el usuario no se borra, se
 
 | Respuesta | Cuándo |
 |---|---|
-| `200` `{ "message": "Usuario desactivado", "payload": { ... } }` | El usuario se desactivó. |
+| `200` `{ ...usuario, "activo": false }` | El usuario se desactivó. |
 | `404` `{ "message": "Usuario no encontrado" }` | No existe o ya estaba inactivo. |
 | `403` `{ "message": "Acceso denegado" }` | El token no es de un administrador. |
 
@@ -185,7 +185,7 @@ Solo para administradores. Crea el usuario con una contraseña temporal generada
 
 | Respuesta | Cuándo |
 |---|---|
-| `201` `{ "message": "Usuario creado", "payload": { ... } }` | Usuario creado. |
+| `201` `{ ...usuario }` | Usuario creado. |
 | `400` `{ "message": "Datos inválidos", "error": "..." }` | Falta algún campo, o `rol` no es `profesional` ni `administrador`. |
 | `401` | Falta el token o es inválido. |
 | `403` `{ "message": "Acceso denegado" }` | El token no es de un administrador. |

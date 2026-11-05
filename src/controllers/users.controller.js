@@ -3,7 +3,7 @@ import * as userService from '../services/users.services.js';
 export const getAllUsers = async (req, res) => {
     try {
         const users = await userService.getAllUsers();
-        res.status(200).json({ message: "Lista de usuarios", payload: users });
+        res.status(200).json(users);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "error interno del servidor" });
@@ -16,7 +16,7 @@ export const getUserById = async (req, res) => {
         const id = req.params.id;
         const user = await userService.getUserById(id);
         if (user) {
-            res.status(200).json({ message: "Usuario encontrado", payload: user });
+            res.status(200).json(user);
         } else {
             res.status(404).json({message: 'Usuario no encontrado'});
         }
@@ -30,7 +30,7 @@ export const getMe = async (req, res) => {
     try {
         const user = await userService.getUserById(req.user.id);
         if (user) {
-            res.status(200).json({ message: "Usuario encontrado", payload: user });
+            res.status(200).json(user);
         } else {
             res.status(404).json({message: 'Usuario no encontrado'});
         }
@@ -44,7 +44,7 @@ export const createUserByAdmin = async (req, res) => {
     try {
         const { nombre, apellido, email, rol } = req.body ?? {};
         const newUser = await userService.createUserByAdmin({ nombre, apellido, email, rol });
-        res.status(201).json({ message: "Usuario creado", payload: newUser });
+        res.status(201).json(newUser);
     } catch (error) {
         if (error.code === 11000) {
             return res.status(409).json({ message: "El email ya está registrado" });
@@ -79,7 +79,7 @@ export const deleteUser = async (req, res) => {
         const id = req.params.id;
         const deletedUser = await userService.deleteUser(id);
         if (deletedUser) {
-            res.status(200).json({ message: "Usuario desactivado", payload: deletedUser });
+            res.status(200).json(deletedUser);
         } else {
             res.status(404).json({message: 'Usuario no encontrado'});
         }

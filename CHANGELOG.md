@@ -12,6 +12,14 @@ Changes are grouped by date and categorized as:
 
 ---
 
+## 2026-11-05
+
+### Changed
+
+* Successful (200 and 201) user responses now return the requested data directly, without a `message`/`payload` wrapper: listing users returns an array, and viewing, viewing one's own profile, deactivating and creating a user (by an administrator) return the user object.
+
+---
+
 ## 2026-10-28
 
 ### Added
